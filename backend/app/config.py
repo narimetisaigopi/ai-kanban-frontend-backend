@@ -1,0 +1,23 @@
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
+
+class Settings(BaseSettings):
+    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
+
+    database_url: str = "postgresql+asyncpg://kanban:kanban@db:5432/kanban"
+
+    demo_email: str = "demo@kanban.app"
+    demo_password: str = "demo1234"
+
+    jwt_secret: str = "change-me-in-production"
+    jwt_algorithm: str = "HS256"
+    jwt_expire_minutes: int = 60 * 24
+
+    openrouter_api_key: str = ""
+    openrouter_model: str = "nex-agi/nex-n2-pro:free"
+    openrouter_url: str = "https://openrouter.ai/api/v1/chat/completions"
+
+    cors_origins: str = "http://localhost:3000"
+
+
+settings = Settings()

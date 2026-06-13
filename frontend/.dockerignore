@@ -1,0 +1,10 @@
+node_modules
+.next
+out
+test-results
+playwright-report
+blob-report
+.git
+.env
+.env*.local
+npm-debug.log*
