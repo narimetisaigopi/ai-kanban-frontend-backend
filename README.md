@@ -69,3 +69,44 @@ npm run test:e2e  # Playwright E2E (requires the stack running)
 - `POST /api/chat` - chat with the assistant
 
 All routes except login require a `Bearer` token.
+
+## Deploy backend and DB on Railway
+
+1. Push this repo to GitHub.
+2. In Railway, create a new project.
+3. Add a `PostgreSQL` service.
+4. Add a new service from GitHub and point the root directory to `backend`.
+5. Keep Docker build enabled (the backend already has a `Dockerfile`).
+6. Set backend environment variables in Railway:
+	- `DATABASE_URL`: reference the Postgres service `DATABASE_URL`
+	- `OPENROUTER_API_KEY`: your OpenRouter key
+	- `CORS_ORIGINS`: your frontend URL (for example `https://your-app.vercel.app`)
+	- `JWT_SECRET`: a strong random string
+7. Deploy the backend service and verify `GET /api/health` returns `{"status":"ok"}`.
+
+Notes:
+
+- The backend now accepts Railway dynamic ports via `PORT`.
+- Railway Postgres URLs are normalized automatically for async SQLAlchemy.
+- If your frontend is on Vercel, set `NEXT_PUBLIC_API_URL` to the Railway backend URL.
+
+## Deploy frontend on Vercel
+
+Frontend is ready to deploy and automatically uses the Railway backend.
+
+Using Vercel CLI:
+
+```bash
+npm install -g vercel
+cd frontend
+vercel deploy --prod --project-id prj_qgoEIslJuCTfdxu9bbx0dkdtMAFC
+```
+
+Or link via Vercel dashboard:
+1. Go to https://vercel.com/dashboard
+2. Import this GitHub repo
+3. Set root directory to `frontend`
+4. Vercel will detect Next.js and build automatically
+5. Environment: the `NEXT_PUBLIC_API_URL` env var is set in `frontend/.env.production` pointing to Railway
+
+The frontend is now live and connects to your Railway backend at `https://ai-kanban-frontend-backend-production.up.railway.app`.

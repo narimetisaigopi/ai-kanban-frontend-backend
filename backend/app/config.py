@@ -27,5 +27,16 @@ class Settings(BaseSettings):
 
     cors_origins: str = "http://localhost:3000"
 
+    @field_validator("database_url", mode="before")
+    @classmethod
+    def normalize_database_url(cls, value: str) -> str:
+        if not isinstance(value, str):
+            return value
+        if value.startswith("postgres://"):
+            value = value.replace("postgres://", "postgresql://", 1)
+        if value.startswith("postgresql://") and "+asyncpg" not in value:
+            value = value.replace("postgresql://", "postgresql+asyncpg://", 1)
+        return value
+
 
 settings = Settings()
