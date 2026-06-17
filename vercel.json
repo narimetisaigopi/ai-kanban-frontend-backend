@@ -1,0 +1,8 @@
+{
+  "projects": [
+    {
+      "name": "ai-kanban-fullstack",
+      "rootDirectory": "frontend"
+    }
+  ]
+}
