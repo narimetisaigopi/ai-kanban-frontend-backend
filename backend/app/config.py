@@ -26,6 +26,7 @@ class Settings(BaseSettings):
     openrouter_url: str = "https://openrouter.ai/api/v1/chat/completions"
 
     cors_origins: str = "http://localhost:3000"
+    cors_origin_regex: str = r"^https://([a-z0-9-]+\.)?vercel\.app$|^http://localhost(:\d+)?$"
 
     @field_validator("database_url", mode="before")
     @classmethod
