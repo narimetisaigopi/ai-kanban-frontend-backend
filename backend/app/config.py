@@ -4,7 +4,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
-    database_url: str = "postgresql+asyncpg://kanban:kanban@db:5432/kanban"
+    database_url: str  # No default - must be provided via DATABASE_URL env var
 
     demo_email: str = "demo@kanban.app"
     demo_password: str = "demo1234"
